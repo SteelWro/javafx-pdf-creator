@@ -6,9 +6,13 @@ import cwiklinski.me.service.ApiService;
 import cwiklinski.me.service.PdfCreator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 public class PrimaryController {
 
@@ -17,17 +21,41 @@ public class PrimaryController {
 
     private PdfCreator pdfcreator;
     private ApiService apiService;
+    private SuperModel supermodel;
 
     public PrimaryController() {
     }
 
     @FXML
-    private void createPdfs(ActionEvent event) throws IOException, DocumentException, IllegalArgumentException {
-        pdfcreator = new PdfCreator();
+    private void createPdfs(ActionEvent event) {
         apiService = new ApiService();
 
-        SuperModel supermodel = apiService.fetchSubjectInformation(input.getText());
-        pdfcreator.createPdfFile(supermodel);
+        try {
+            pdfcreator = new PdfCreator();
+        } catch (IOException | DocumentException e) {
+            showError("Problem z plikiem czcionki");
+        }
+
+        try {
+         supermodel = apiService.fetchSubjectInformation(input.getText());
+        }catch (NullPointerException e) {
+            showError("brak nipów!" + e.getMessage());
+        }catch (IOException e) {
+            showError("zwrócono kod błędu: ");
+        }
+
+        try {
+            pdfcreator.createPdfFile(supermodel);
+        } catch (IOException | DocumentException e) {
+           showError("Problem z zapisem do pliku pdf!");
+        }
+    }
+
+    private void showError(String error) {
+        Alert alert = new Alert(Alert.AlertType.WARNING
+                ,error
+                ,ButtonType.CLOSE);
+        alert.showAndWait();
     }
 
 

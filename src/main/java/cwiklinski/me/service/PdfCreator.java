@@ -10,6 +10,7 @@ import cwiklinski.me.enums.PdfEnum;
 import cwiklinski.me.model.*;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
@@ -33,7 +34,7 @@ public class PdfCreator {
         unicodeFont = BaseFont.createFont(fontFile.getAbsolutePath(), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
     }
 
-    public void createPdfFile(SuperModel superModel) throws IOException, DocumentException {
+    public void createPdfFile(SuperModel superModel) throws FileNotFoundException, DocumentException {
         final String requestDateTime = superModel.getResult().getRequestDateTime();
         final String requestId = superModel.getResult().getRequestId();
 

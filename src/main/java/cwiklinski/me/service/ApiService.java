@@ -24,23 +24,10 @@ public class ApiService {
         this.REST_URI = propertiesConfiguration.getProp().getProperty("api.url");
     }
 
-    public SuperModel fetchSubjectInformation(String input) {
-
-        try {
+    public SuperModel fetchSubjectInformation(String input) throws IOException {
             FULL_REQUEST_API_URI = buildUriRequestByNips(input);
             URL apiUri = new URL(FULL_REQUEST_API_URI);
             superModel = objectMapper.readValue(apiUri, SuperModel.class);
-        } catch (NullPointerException e) {
-            logger.warning("Brak podanych NIPów ");
-            logger.warning(e.getMessage());
-
-        } catch (MalformedURLException e) {
-            logger.warning("Adres API jest nieprawdiłowy lub brak z nim połączenia");
-            logger.warning(e.getMessage());
-        } catch (IOException e) {
-            logger.warning("Zwrócono kod błędu");
-            logger.warning(e.getMessage());
-        }
         return superModel;
     }
 
