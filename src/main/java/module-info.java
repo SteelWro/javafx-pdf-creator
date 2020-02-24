@@ -8,5 +8,6 @@ module cwiklinski.me {
 
     opens cwiklinski.me to javafx.fxml;
     opens cwiklinski.me.model to com.fasterxml.jackson.databind;
+    opens cwiklinski.me.service to itextpdf;
     exports cwiklinski.me;
 }

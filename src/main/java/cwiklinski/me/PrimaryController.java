@@ -9,10 +9,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 public class PrimaryController {
 
@@ -39,9 +37,12 @@ public class PrimaryController {
         try {
          supermodel = apiService.fetchSubjectInformation(input.getText());
         }catch (NullPointerException e) {
-            showError("brak nipów!" + e.getMessage());
+            showError("brak nipów!");
+            System.out.println(e.getMessage());
         }catch (IOException e) {
+            e.printStackTrace();
             showError("zwrócono kod błędu: ");
+
         }
 
         try {
